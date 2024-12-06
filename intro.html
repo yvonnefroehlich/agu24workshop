@@ -1,0 +1,776 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Mastering Geospatial Visualizations with GMT/PyGMT &#8212; Mastering Geospatial Visualizations with GMT/PyGMT</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'intro';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial 1 - First figure 🚀 and Subplots / layout" href="tut01_firstfigure.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.webp" class="logo__image only-light" alt="Mastering Geospatial Visualizations with GMT/PyGMT - Home"/>
+    <script>document.write(`<img src="_static/logo.webp" class="logo__image only-dark" alt="Mastering Geospatial Visualizations with GMT/PyGMT - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    Mastering Geospatial Visualizations with GMT/PyGMT
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">🔗 Details</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://www.agu.org/annual-meeting">AGU24 Homepage</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/GenericMappingTools/agu24workshop">Course materials on GitHub</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">🧑‍🏫 Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="tut01_firstfigure.html"><strong>Tutorial 1</strong> - First figure 🚀 and Subplots / layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tut02_spe_pd_gpd.html"><strong>Tutorial 2</strong> - scientific Python ecosystem 🐍: <code class="docutils literal notranslate"><span class="pre">pandas</span></code> and <code class="docutils literal notranslate"><span class="pre">GeoPandas</span></code> (tabular data 🗒️)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tut03_spe_xarray.html"><strong>Tutorial 3</strong> - scientific Python ecosystem 🐍: <code class="docutils literal notranslate"><span class="pre">Xarray</span></code> (gridded data 🌐)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tut04_geophysics.html"><strong>Tutorial 4</strong> - Geophysics (Seismology) 🌎🌏🌍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tut05_topography.html"><strong>Tutorial 5</strong> - 3-D Topography (Planetary / Antarctic maps) 🏔️</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="tut06_animation.html"><strong>Tutorial 6</strong> - Animations with GMT</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="tut06_animation_extended.html"><strong>Tutorial 6</strong> - Animations with GMT (extended)</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/GenericMappingTools/agu24workshop" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/GenericMappingTools/agu24workshop/edit/main/book/intro.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/GenericMappingTools/agu24workshop/issues/new?title=Issue%20on%20page%20%2Fintro.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/intro.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Mastering Geospatial Visualizations with GMT/PyGMT</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-of-tutorials">📚 Overview of tutorials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-your-environment">🌠 Setting up your environment</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-local-environment-for-running-tutorials">💻 Creating a local environment for running tutorials</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="mastering-geospatial-visualizations-with-gmt-pygmt">
+<h1>Mastering Geospatial Visualizations with GMT/PyGMT<a class="headerlink" href="#mastering-geospatial-visualizations-with-gmt-pygmt" title="Link to this heading">#</a></h1>
+<p>Welcome to the AGU24 <a class="reference external" href="https://docs.generic-mapping-tools.org/6.5">GMT</a>/
+<a class="reference external" href="https://www.pygmt.org/v0.13.0">PyGMT</a> workshop 🥳! This Jupyter book 📖 contains
+tutorials for making maps 🗺️ and animations 🎦</p>
+<section id="overview-of-tutorials">
+<h2>📚 Overview of tutorials<a class="headerlink" href="#overview-of-tutorials" title="Link to this heading">#</a></h2>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 sd-p-1 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-3 sd-row-cols-lg-3 sd-g-1 sd-g-xs-1 sd-g-sm-1 sd-g-md-1 sd-g-lg-1 docutils">
+<div class="sd-col sd-d-flex-column docutils">
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-1 sd-row-cols-lg-1 sd-g-1 sd-g-xs-1 sd-g-sm-1 sd-g-md-1 sd-g-lg-1 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<img alt="" class="sd-card-img-top" src="_images/fd70248f75b8b37ee54b3135f77705f98c6d8489eb18b6910184b447d0f0638d.png" />
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Tutorial 1 - First figure 🚀 and Subplots / layout</div>
+<p class="sd-card-text">by <a class="reference external" href="https://orcid.org/0009-0002-7195-3071">Jing-Hui Tong</a></p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">pygmt</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">coast</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">colorbar</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">grdimage</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">makecpt</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">subplot</span>
+<span class="sd-sphinx-override sd-badge sd-outline-secondary sd-text-secondary">earth_relief</span>
+<span class="sd-sphinx-override sd-badge sd-outline-secondary sd-text-secondary">earth_age</span></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference external" href="./tut01_firstfigure.html"><span>./tut01_firstfigure.html</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<img alt="" class="sd-card-img-top" src="_images/7f18327908c8dd210197cc51845e45a933f356b9fd12bd029a4a8cbda080eb2b.png" />
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Tutorial 2 - Integration with the scientific Python ecosystem 🐍: pandas and GeoPandas (tabular data 🗒️)</div>
+<p class="sd-card-text">by <a class="reference external" href="https://orcid.org/0000-0002-8566-0619">Yvonne Fröhlich</a></p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">pygmt</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">histogram</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">legend</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">plot</span>
+<span class="sd-sphinx-override sd-badge sd-outline-secondary sd-text-secondary">japan_quakes</span>
+<span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">pandas</span>
+<span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">geopandas</span>
+<span class="sd-sphinx-override sd-badge sd-outline-success sd-text-success">choropleth map</span>
+<span class="sd-sphinx-override sd-badge sd-outline-success sd-text-success">scatter plot</span></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference external" href="./tut02_spe_pd_gpd.html"><span>./tut02_spe_pd_gpd.html</span></a></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-column docutils">
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-1 sd-row-cols-lg-1 sd-g-1 sd-g-xs-1 sd-g-sm-1 sd-g-md-1 sd-g-lg-1 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<img alt="" class="sd-card-img-top" src="_images/a18fcb026fb0d0c83360f2b8382a360e552dd50db6aa2db5311259bf5223d3a2.png" />
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Tutorial 3 - Integration with the scientific Python ecosystem 🐍: Xarray (gridded data 🌐)</div>
+<p class="sd-card-text">by <a class="reference external" href="https://orcid.org/0000-0003-0180-8928">Max Jones</a></p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">pygmt</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">config</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">grdgradient</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">which</span>
+<span class="sd-sphinx-override sd-badge sd-outline-secondary sd-text-secondary">earth_relief</span>
+<span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">xarray</span>
+<span class="sd-sphinx-override sd-badge sd-outline-success sd-text-success">temperature</span>
+<span class="sd-sphinx-override sd-badge sd-outline-success sd-text-success">CMIP6</span></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference external" href="./tut03_spe_xarray.html"><span>./tut03_spe_xarray.html</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<img alt="" class="sd-card-img-top" src="https://github.com/user-attachments/assets/37d94581-b9e9-4dec-a021-07c1b58c132a" />
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Tutorial 4 - Geophysics (Seismology) 🌎🌏🌍</div>
+<p class="sd-card-text">by <a class="reference external" href="https://orcid.org/0009-0002-7195-3071">Jing-Hui Tong</a>
+and <a class="reference external" href="https://orcid.org/0000-0002-8566-0619">Yvonne Fröhlich</a></p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">pygmt</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">grdcontour</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">grdinfo</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">grdtrack</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">meca</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">project</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">text</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">xyz2grd</span>
+<span class="sd-sphinx-override sd-badge sd-outline-secondary sd-text-secondary">earth_relief</span>
+<span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">numpy</span>
+<span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">pandas</span></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference external" href="./tut04_geophysics.html"><span>./tut04_geophysics.html</span></a></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-column docutils">
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-1 sd-row-cols-lg-1 sd-g-1 sd-g-xs-1 sd-g-sm-1 sd-g-md-1 sd-g-lg-1 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<img alt="" class="sd-card-img-top" src="_images/0a6fc097b1fcaa99eff8632dab714787757564ed60e07f20825101c6a8e045ae.png" />
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Tutorial 5 - 3-D Topography (Planetary / Antarctic maps)</div>
+<p class="sd-card-text">by <a class="reference external" href="https://orcid.org/0000-0003-2354-1988">Wei Ji Leong</a>
+and <a class="reference external" href="https://orcid.org/0000-0002-8865-6180">André Belém</a></p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">pygmt</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">grdview</span>
+<span class="sd-sphinx-override sd-badge sd-outline-secondary sd-text-secondary">mars_relief</span>
+<span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">rioxarray</span>
+<span class="sd-sphinx-override sd-badge sd-outline-success sd-text-success">Sentinel-2</span>
+<span class="sd-sphinx-override sd-badge sd-outline-success sd-text-success">DEM</span></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference external" href="./tut05_topography.html"><span>./tut05_topography.html</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<img alt="" class="sd-card-img-top" src="_images/5847818951ca8fbc9b86a6f2c67389b6.png" />
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Tutorial 6 - Animations with GMT</div>
+<p class="sd-card-text">by <a class="reference external" href="https://orcid.org/0000-0002-0641-7371">Federico Esteban</a></p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><span class="sd-sphinx-override sd-badge sd-bg-primary sd-bg-text-primary">gmt</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">events</span>
+<span class="sd-sphinx-override sd-badge sd-outline-primary sd-text-primary">movie</span>
+<span class="sd-sphinx-override sd-badge sd-outline-secondary sd-text-secondary">earth_relief</span>
+<span class="sd-sphinx-override sd-badge sd-outline-secondary sd-text-secondary">quakes_2018</span>
+<span class="sd-sphinx-override sd-badge sd-bg-success sd-bg-text-success">bash</span></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference external" href="./tut06_animation.html"><span>./tut06_animation.html</span></a></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Each tutorial is rendered on this website for easy viewing 👀, but they are all Jupyter
+notebooks designed to be ran interactively 💫. See the instructions below on how you can
+start running the tutorials in no time! 🚀</p>
+</section>
+<section id="setting-up-your-environment">
+<h2>🌠 Setting up your environment<a class="headerlink" href="#setting-up-your-environment" title="Link to this heading">#</a></h2>
+<p>To run these notebooks in an interactive Jupyter session online, 🖱️ click on the button
+below to launch on regular
+<a class="reference external" href="https://mybinder.readthedocs.io/en/latest/index.html">Binder</a>.</p>
+<p><a class="reference external" href="https://mybinder.org/v2/gh/GenericMappingTools/agu24workshop/main"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a></p>
+<p>Alternatively, you can go to a specific tutorial page, hover over the rocket 🚀 icon on
+the top right, and click ‘Binder’.</p>
+<section id="creating-a-local-environment-for-running-tutorials">
+<h3>💻 Creating a local environment for running tutorials<a class="headerlink" href="#creating-a-local-environment-for-running-tutorials" title="Link to this heading">#</a></h3>
+<p>If you prefer to run the 🧑‍🏫 tutorials with a local installation of GMT/PyGMT, then
+follow along! For this AGU24 workshop, we recommend creating a virtual conda environment
+and installing the C and 🐍 Python libraries inside.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>If you are running this on Windows, we recommend installing a bash emulator (e.g.
+<a class="reference external" href="https://gitforwindows.org/">Git for Windows</a>) so that you can run the command-line
+instructions below. A bash prompt is also a pre-requisite for the final
+<a class="reference internal" href="tut06_animation.html"><span class="doc std std-doc">animation tutorial</span></a> that assumes a bash scripting environment.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>For users comfortable with using <code class="docutils literal notranslate"><span class="pre">git</span></code>, feel free to ⬇️ download or clone the
+repository containing the workshop materials directly using
+<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/GenericMappingTools/agu24workshop.git</span></code></p>
+</div>
+<p>Here’s the instructions to install the <code class="docutils literal notranslate"><span class="pre">agu24workshop</span></code> environment:</p>
+<ol class="arabic">
+<li><p>Ensure that you have the
+<a class="reference external" href="https://docs.conda.io/projects/conda/en/latest/user-guide/index.html"><code class="docutils literal notranslate"><span class="pre">conda</span></code></a>
+package manager installed (e.g. via
+<a class="reference external" href="https://docs.anaconda.com/miniconda"><code class="docutils literal notranslate"><span class="pre">miniconda</span></code></a> or
+<a class="reference external" href="https://www.anaconda.com/download">Anaconda</a>). You can also use
+<a class="reference external" href="https://mamba.readthedocs.io/en/stable/installation/mamba-installation.html"><code class="docutils literal notranslate"><span class="pre">mamba</span></code></a>
+which tends to be a ⚡ faster alternative.</p></li>
+<li><p>Make a folder called ‘agu24workshop’. This will be where you will put all the Jupyter
+notebooks and data files 🗃️ used in the workshop.</p></li>
+<li><p>Download a copy of the ‘environment.yml’ file which contains a 📄 list of
+dependencies required to run the tutorials in this workshop. Get it at
+<a class="github reference external" href="https://github.com/GenericMappingTools/agu24workshop/blob/main/environment.yml">GenericMappingTools/agu24workshop</a>.</p></li>
+<li><p>Run the following commands on the 🧑‍💻 command-line to create the virtual environment</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/path/to/agu24workshop
+conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>agu24workshop<span class="w"> </span>--file<span class="w"> </span>environment.yml
+</pre></div>
+</div>
+</li>
+<li><p>Once the installation is completed 🏁, launch
+<a class="reference external" href="https://jupyterlab.readthedocs.io">Jupyter Lab</a> as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>agu24workshop
+jupyter<span class="w"> </span>lab
+</pre></div>
+</div>
+<p>This should open up a page in your default browser. If not, you can click and open
+the 🔗 link that says <code class="docutils literal notranslate"><span class="pre">http://localhost:8888/lab?token=...</span></code> in your command-line
+terminal and this will will take you to the Jupyter Lab page.</p>
+</li>
+<li><p>Download the Jupyter notebook(s) you want to run (e.g.
+<a class="reference external" href="https://www.generic-mapping-tools.org/agu24workshop/tut01_firstfigure.html">https://www.generic-mapping-tools.org/agu24workshop/tut01_firstfigure.html</a>) using
+either the download button on the ↗️ top right (select ‘.ipynb’) or from GitHub at
+<a class="github reference external" href="https://github.com/GenericMappingTools/agu24workshop/tree/main/book">GenericMappingTools/agu24workshop</a>. Make sure to put
+the *.ipynb file(s) inside of the ‘agu24workshop’ folder.</p></li>
+<li><p>Open the Jupyter notebook in the left-pane file browser, e.g. by 🖱️ double-clicking
+on <code class="docutils literal notranslate"><span class="pre">first-figure.ipynb</span></code>. You are now ready to run through the course materials 🎉!</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you’re intending to use GMT/PyGMT in another project outside of this course, please
+follow the official installation instructions at:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.generic-mapping-tools.org/latest/install.html">https://docs.generic-mapping-tools.org/latest/install.html</a></p></li>
+<li><p><a class="reference external" href="https://www.pygmt.org/latest/install.html">https://www.pygmt.org/latest/install.html</a></p></li>
+</ul>
+</div>
+</section>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="tut01_firstfigure.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><strong>Tutorial 1</strong> - First figure 🚀 and Subplots / layout</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-of-tutorials">📚 Overview of tutorials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-your-environment">🌠 Setting up your environment</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-local-environment-for-running-tutorials">💻 Creating a local environment for running tutorials</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The GMT and PyGMT Teams
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />
+This content is licensed under a
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,2270 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Tutorial 5 - 3-D Topography (Planetary / Antarctic maps) 🏔️ &#8212; Mastering Geospatial Visualizations with GMT/PyGMT</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tut05_topography';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial 6 - Animations with GMT" href="tut06_animation.html" />
+    <link rel="prev" title="Tutorial 4 - Geophysics (Seismology) 🌎🌏🌍" href="tut04_geophysics.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.webp" class="logo__image only-light" alt="Mastering Geospatial Visualizations with GMT/PyGMT - Home"/>
+    <script>document.write(`<img src="_static/logo.webp" class="logo__image only-dark" alt="Mastering Geospatial Visualizations with GMT/PyGMT - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Mastering Geospatial Visualizations with GMT/PyGMT
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">🔗 Details</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://www.agu.org/annual-meeting">AGU24 Homepage</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/GenericMappingTools/agu24workshop">Course materials on GitHub</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">🧑‍🏫 Tutorials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="tut01_firstfigure.html"><strong>Tutorial 1</strong> - First figure 🚀 and Subplots / layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tut02_spe_pd_gpd.html"><strong>Tutorial 2</strong> - scientific Python ecosystem 🐍: <code class="docutils literal notranslate"><span class="pre">pandas</span></code> and <code class="docutils literal notranslate"><span class="pre">GeoPandas</span></code> (tabular data 🗒️)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tut03_spe_xarray.html"><strong>Tutorial 3</strong> - scientific Python ecosystem 🐍: <code class="docutils literal notranslate"><span class="pre">Xarray</span></code> (gridded data 🌐)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tut04_geophysics.html"><strong>Tutorial 4</strong> - Geophysics (Seismology) 🌎🌏🌍</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Tutorial 5</strong> - 3-D Topography (Planetary / Antarctic maps) 🏔️</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="tut06_animation.html"><strong>Tutorial 6</strong> - Animations with GMT</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="tut06_animation_extended.html"><strong>Tutorial 6</strong> - Animations with GMT (extended)</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/GenericMappingTools/agu24workshop/main?urlpath=lab/tree/book/tut05_topography.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/GenericMappingTools/agu24workshop" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/GenericMappingTools/agu24workshop/edit/main/book/tut05_topography.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/GenericMappingTools/agu24workshop/issues/new?title=Issue%20on%20page%20%2Ftut05_topography.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/tut05_topography.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Tutorial 5 - 3-D Topography (Planetary / Antarctic maps) 🏔️</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mars-relief-data">0️⃣ Mars relief data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d-map-view">0.1 2-D map view</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zoomed-in-view">0.2 Zoomed in view</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-grdview-for-3-d-visualization">1️⃣ Using <code class="docutils literal notranslate"><span class="pre">grdview</span></code> for 3-D Visualization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#antarctic-digital-elevation-model">2️⃣ Antarctic Digital Elevation Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-a-dem-mosaic">2.1 Getting a DEM mosaic</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-rgb-imagery">2.2 Getting RGB imagery</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#draping-rgb-image-on-3-d-topography">3️⃣ Draping RGB image on 3-D topography</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="tutorial-5-3-d-topography-planetary-antarctic-maps">
+<h1><strong>Tutorial 5</strong> - 3-D Topography (Planetary / Antarctic maps) 🏔️<a class="headerlink" href="#tutorial-5-3-d-topography-planetary-antarctic-maps" title="Link to this heading">#</a></h1>
+<p>In this tutorial, let’s use PyGMT to create 3-D perspective plots of Digital Elevation
+Models (DEM) over Mars (the planet) and Antarctica (the continent)!</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This tutorial is part of the AGU24 annual meeting GMT/PyGMT pre-conference workshop (PREWS9) <strong>Mastering Geospatial Visualizations with GMT/PyGMT</strong></p>
+<ul class="simple">
+<li><p>Website: <a class="reference external" href="https://www.generic-mapping-tools.org/agu24workshop">https://www.generic-mapping-tools.org/agu24workshop</a></p></li>
+<li><p>GitHub: <a class="github reference external" href="https://github.com/GenericMappingTools/agu24workshop">GenericMappingTools/agu24workshop</a></p></li>
+<li><p>Conference: <a class="reference external" href="https://agu.confex.com/agu/agu24/meetingapp.cgi/Session/226736">https://agu.confex.com/agu/agu24/meetingapp.cgi/Session/226736</a></p></li>
+</ul>
+<p>History</p>
+<ul class="simple">
+<li><p>Authors: <a class="reference external" href="https://orcid.org/0000-0003-2354-1988">Wei Ji Leong</a> and <a class="reference external" href="https://orcid.org/0000-0002-8865-6180">André Belém</a></p></li>
+<li><p>Created: November-December 2024</p></li>
+<li><p>Recommended versions: <a class="reference external" href="https://www.pygmt.org/v0.13.0">PyGMT v0.13.0</a> with <a class="reference external" href="https://docs.generic-mapping-tools.org/6.5">GMT 6.5.0</a></p></li>
+</ul>
+<p>🔖 References</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.generic-mapping-tools.org/remote-datasets/mars-relief.html">https://www.generic-mapping-tools.org/remote-datasets/mars-relief.html</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/andrebelem/PlanetaryMaps">andrebelem/PlanetaryMaps</a></p></li>
+<li><p><span id="id1">Neumann <em>et al.</em> [<a class="reference internal" href="#id5" title="G. A. Neumann, J. B. Abshire, O. Aharonson, J. B. Garvin, X. Sun, and M. T. Zuber. Mars Orbiter Laser Altimeter pulse width measurements and footprint-scale roughness. Geophysical Research Letters, 30(11):2003GL017048, June 2003. doi:10.1029/2003GL017048.">2003</a>]</span></p></li>
+</ul>
+<p>Fee free to play around with these code examples 🚀. In case you found any kind of error, just report it by <a class="reference external" href="https://github.com/GenericMappingTools/agu24workshop/issues">opening an issue</a> or <a class="reference external" href="https://github.com/GenericMappingTools/agu24workshop/pulls">provide a fix via a pull request</a>. Please use the <a class="reference external" href="https://forum.generic-mapping-tools.org/">GMT forum</a> to ask questions.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pygmt</span>
+<span class="kn">import</span> <span class="nn">rioxarray</span>
+<span class="kn">import</span> <span class="nn">rioxarray.merge</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="mars-relief-data">
+<h2>0️⃣ Mars relief data<a class="headerlink" href="#mars-relief-data" title="Link to this heading">#</a></h2>
+<p>First, we’ll load the Mars Orbiter Laser Altimeter (MOLA) dataset using
+<a class="reference external" href="https://www.pygmt.org/v0.13.0/api/generated/pygmt.datasets.load_mars_relief.html"><code class="docutils literal notranslate"><span class="pre">pygmt.datasets.load_mars_relief</span></code></a>.
+The following command will load the MOLA dataset into an
+<a class="reference external" href="https://docs.xarray.dev/en/v2024.09.0/generated/xarray.DataArray.html"><code class="docutils literal notranslate"><span class="pre">xarray.DataArray</span></code></a>
+grid, and we’ll set the <code class="docutils literal notranslate"><span class="pre">resolution</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">01d</span></code> (1 arc-degree) for now.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da_mars</span> <span class="o">=</span> <span class="n">pygmt</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_mars_relief</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="s2">&quot;01d&quot;</span><span class="p">)</span>
+<span class="n">da_mars</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>gmtread [NOTICE]: Remote data courtesy of GMT data server oceania [http://oceania.generic-mapping-tools.org]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>gmtread [NOTICE]: MOLA Mars Relief at 1x1 arc degrees reduced by Gaussian Cartesian filtering (167.7 km fullwidth) [Neumann et al., 2003].
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>gmtread [NOTICE]:   -&gt; Download grid file [109K]: mars_relief_01d_g.grd
+</pre></div>
+</div>
+<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+html[data-theme=dark],
+body[data-theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block !important;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 0 20px 0 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: inline-block;
+  opacity: 0;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:focus + label {
+  border: 2px solid var(--xr-font-color0);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-index-preview {
+  grid-column: 2 / 5;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data,
+.xr-index-data-in:checked ~ .xr-index-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-index-name div,
+.xr-index-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2,
+.xr-no-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.DataArray &#x27;z&#x27; (lat: 181, lon: 361)&gt; Size: 523kB
+array([[ 3840.5,  3840.5,  3840.5, ...,  3840.5,  3840.5,  3840.5],
+       [ 3712.5,  3697. ,  3674.5, ...,  3739. ,  3726. ,  3712.5],
+       [ 2714.5,  2717. ,  2674.5, ...,  2917.5,  2808.5,  2714.5],
+       ...,
+       [-2523. , -2522. , -2533.5, ..., -2567.5, -2564. , -2523. ],
+       [-2294. , -2300.5, -2303.5, ..., -2269.5, -2283.5, -2294. ],
+       [-2019. , -2019. , -2019. , ..., -2019. , -2019. , -2019. ]])
+Coordinates:
+  * lat      (lat) float64 1kB -90.0 -89.0 -88.0 -87.0 ... 87.0 88.0 89.0 90.0
+  * lon      (lon) float64 3kB -180.0 -179.0 -178.0 -177.0 ... 178.0 179.0 180.0
+Attributes:
+    Conventions:  CF-1.7
+    title:        MOLA Mars Relief at 01 arc degree
+    history:      
+    description:  NASA Mars (MOLA) relief
+    long_name:    elevation (m)
+    units:        meters</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-array-name'>'z'</div><ul class='xr-dim-list'><li><span class='xr-has-index'>lat</span>: 181</li><li><span class='xr-has-index'>lon</span>: 361</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-918bfade-4a88-45ca-bf2a-4d03516226e7' class='xr-array-in' type='checkbox' checked><label for='section-918bfade-4a88-45ca-bf2a-4d03516226e7' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>3.84e+03 3.84e+03 3.84e+03 ... -2.019e+03 -2.019e+03 -2.019e+03</span></div><div class='xr-array-data'><pre>array([[ 3840.5,  3840.5,  3840.5, ...,  3840.5,  3840.5,  3840.5],
+       [ 3712.5,  3697. ,  3674.5, ...,  3739. ,  3726. ,  3712.5],
+       [ 2714.5,  2717. ,  2674.5, ...,  2917.5,  2808.5,  2714.5],
+       ...,
+       [-2523. , -2522. , -2533.5, ..., -2567.5, -2564. , -2523. ],
+       [-2294. , -2300.5, -2303.5, ..., -2269.5, -2283.5, -2294. ],
+       [-2019. , -2019. , -2019. , ..., -2019. , -2019. , -2019. ]])</pre></div></div></li><li class='xr-section-item'><input id='section-b72c9889-e19d-40c9-b09a-07d40c5d1385' class='xr-section-summary-in' type='checkbox'  checked><label for='section-b72c9889-e19d-40c9-b09a-07d40c5d1385' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>lat</span></div><div class='xr-var-dims'>(lat)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-90.0 -89.0 -88.0 ... 89.0 90.0</div><input id='attrs-9b56665a-2347-43f3-b1f2-1e3358fd4de8' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-9b56665a-2347-43f3-b1f2-1e3358fd4de8' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1354ac43-72ae-40a3-992d-ecb195585ac2' class='xr-var-data-in' type='checkbox'><label for='data-1354ac43-72ae-40a3-992d-ecb195585ac2' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>latitude</dd><dt><span>units :</span></dt><dd>degrees_north</dd><dt><span>standard_name :</span></dt><dd>latitude</dd><dt><span>axis :</span></dt><dd>Y</dd></dl></div><div class='xr-var-data'><pre>array([-90., -89., -88., -87., -86., -85., -84., -83., -82., -81., -80., -79.,
+       -78., -77., -76., -75., -74., -73., -72., -71., -70., -69., -68., -67.,
+       -66., -65., -64., -63., -62., -61., -60., -59., -58., -57., -56., -55.,
+       -54., -53., -52., -51., -50., -49., -48., -47., -46., -45., -44., -43.,
+       -42., -41., -40., -39., -38., -37., -36., -35., -34., -33., -32., -31.,
+       -30., -29., -28., -27., -26., -25., -24., -23., -22., -21., -20., -19.,
+       -18., -17., -16., -15., -14., -13., -12., -11., -10.,  -9.,  -8.,  -7.,
+        -6.,  -5.,  -4.,  -3.,  -2.,  -1.,   0.,   1.,   2.,   3.,   4.,   5.,
+         6.,   7.,   8.,   9.,  10.,  11.,  12.,  13.,  14.,  15.,  16.,  17.,
+        18.,  19.,  20.,  21.,  22.,  23.,  24.,  25.,  26.,  27.,  28.,  29.,
+        30.,  31.,  32.,  33.,  34.,  35.,  36.,  37.,  38.,  39.,  40.,  41.,
+        42.,  43.,  44.,  45.,  46.,  47.,  48.,  49.,  50.,  51.,  52.,  53.,
+        54.,  55.,  56.,  57.,  58.,  59.,  60.,  61.,  62.,  63.,  64.,  65.,
+        66.,  67.,  68.,  69.,  70.,  71.,  72.,  73.,  74.,  75.,  76.,  77.,
+        78.,  79.,  80.,  81.,  82.,  83.,  84.,  85.,  86.,  87.,  88.,  89.,
+        90.])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>lon</span></div><div class='xr-var-dims'>(lon)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-180.0 -179.0 ... 179.0 180.0</div><input id='attrs-305e05bb-240f-42fc-9dee-c40f0e18bb4d' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-305e05bb-240f-42fc-9dee-c40f0e18bb4d' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-aa95c0ac-5a3c-46b6-9269-59c06c80fd15' class='xr-var-data-in' type='checkbox'><label for='data-aa95c0ac-5a3c-46b6-9269-59c06c80fd15' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>longitude</dd><dt><span>units :</span></dt><dd>degrees_east</dd><dt><span>standard_name :</span></dt><dd>longitude</dd><dt><span>axis :</span></dt><dd>X</dd></dl></div><div class='xr-var-data'><pre>array([-180., -179., -178., ...,  178.,  179.,  180.])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-b03db06f-244f-475c-a3c6-7a63653409dc' class='xr-section-summary-in' type='checkbox'  ><label for='section-b03db06f-244f-475c-a3c6-7a63653409dc' class='xr-section-summary' >Indexes: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-index-name'><div>lat</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-7cfd2133-9b23-443f-9c84-4785bed66a86' class='xr-index-data-in' type='checkbox'/><label for='index-7cfd2133-9b23-443f-9c84-4785bed66a86' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([-90.0, -89.0, -88.0, -87.0, -86.0, -85.0, -84.0, -83.0, -82.0, -81.0,
+       ...
+        81.0,  82.0,  83.0,  84.0,  85.0,  86.0,  87.0,  88.0,  89.0,  90.0],
+      dtype=&#x27;float64&#x27;, name=&#x27;lat&#x27;, length=181))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>lon</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-d5c2942d-3b08-4c1d-802d-e87962894014' class='xr-index-data-in' type='checkbox'/><label for='index-d5c2942d-3b08-4c1d-802d-e87962894014' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([-180.0, -179.0, -178.0, -177.0, -176.0, -175.0, -174.0, -173.0, -172.0,
+       -171.0,
+       ...
+        171.0,  172.0,  173.0,  174.0,  175.0,  176.0,  177.0,  178.0,  179.0,
+        180.0],
+      dtype=&#x27;float64&#x27;, name=&#x27;lon&#x27;, length=361))</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-e81adb0d-f808-4017-9e83-d784ff6b3ede' class='xr-section-summary-in' type='checkbox'  checked><label for='section-e81adb0d-f808-4017-9e83-d784ff6b3ede' class='xr-section-summary' >Attributes: <span>(6)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>Conventions :</span></dt><dd>CF-1.7</dd><dt><span>title :</span></dt><dd>MOLA Mars Relief at 01 arc degree</dd><dt><span>history :</span></dt><dd></dd><dt><span>description :</span></dt><dd>NASA Mars (MOLA) relief</dd><dt><span>long_name :</span></dt><dd>elevation (m)</dd><dt><span>units :</span></dt><dd>meters</dd></dl></div></li></ul></div></div></div></div>
+</div>
+<section id="d-map-view">
+<h3>0.1 2-D map view<a class="headerlink" href="#d-map-view" title="Link to this heading">#</a></h3>
+<p>Here we can create a map of the entire Martian surface, using a
+<a class="reference external" href="https://www.pygmt.org/v0.13.0/projections/misc/misc_mollweide.html">Mollweide projection</a>.
+To get a reddish hue, we’ll use a
+<a class="reference external" href="https://docs.generic-mapping-tools.org/6.5/reference/cpts.html">colormap</a>
+called <code class="docutils literal notranslate"><span class="pre">SCM/managua</span></code> which comes with a soft hinge
+(see <a class="reference external" href="https://docs.generic-mapping-tools.org/6.5/makecpt.html#c"><code class="docutils literal notranslate"><span class="pre">makecpt</span> <span class="pre">-C</span></code></a>)
+that can be set at elevation 0 meter by appending <code class="docutils literal notranslate"><span class="pre">+h0</span></code> to the <code class="docutils literal notranslate"><span class="pre">cmap</span></code> parameter.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pygmt</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">grdimage</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="n">da_mars</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;W12c&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;SCM/managua+h0&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">frame</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;a5000&quot;</span><span class="p">,</span> <span class="s2">&quot;x+lElevation&quot;</span><span class="p">,</span> <span class="s2">&quot;y+lm&quot;</span><span class="p">])</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/0b5a44280b6985614e254a80e40ee1b4c9f40e1cfb846b00fa66db74b85867da.png"><img alt="_images/0b5a44280b6985614e254a80e40ee1b4c9f40e1cfb846b00fa66db74b85867da.png" src="_images/0b5a44280b6985614e254a80e40ee1b4c9f40e1cfb846b00fa66db74b85867da.png" style="width: 500px;" /></a>
+</div>
+</div>
+</section>
+<section id="zoomed-in-view">
+<h3>0.2 Zoomed in view<a class="headerlink" href="#zoomed-in-view" title="Link to this heading">#</a></h3>
+<p>A very interesting feature is <a class="reference external" href="https://en.wikipedia.org/wiki/Olympus_Mons">Olympus Mons</a>
+centered at approximately 19°N and 133°W, with a height of 22 km (14 miles) and
+approximately 700 km (435 miles) in diameter.</p>
+<p>Let’s grab a higher resolution map over the volcano, and plot another 2-D map!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">da_olympus</span> <span class="o">=</span> <span class="n">pygmt</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_mars_relief</span><span class="p">(</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="s2">&quot;30s&quot;</span><span class="p">,</span>  <span class="c1"># 30 arc-seconds</span>
+    <span class="n">region</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">151</span><span class="p">,</span> <span class="o">-</span><span class="mi">117</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">25</span><span class="p">],</span>  <span class="c1"># xmin, xmax, ymin, ymax</span>
+<span class="p">)</span>
+<span class="n">da_olympus</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>grdblend [NOTICE]: Remote data courtesy of GMT data server oceania [http://oceania.generic-mapping-tools.org]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>grdblend [NOTICE]: MOLA Mars Relief at 30x30 arc seconds reduced by Gaussian Cartesian filtering (1.4 km fullwidth) [Neumann et al., 2003].
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>grdblend [NOTICE]:   -&gt; Download 15x15 degree grid tile (mars_relief_30s_g): N00W165
+</pre></div>
+</div>
+<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+html[data-theme=dark],
+body[data-theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block !important;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 0 20px 0 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: inline-block;
+  opacity: 0;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:focus + label {
+  border: 2px solid var(--xr-font-color0);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-index-preview {
+  grid-column: 2 / 5;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data,
+.xr-index-data-in:checked ~ .xr-index-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-index-name div,
+.xr-index-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2,
+.xr-no-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.DataArray &#x27;z&#x27; (lat: 1561, lon: 4081)&gt; Size: 51MB
+array([[-3492. , -3491. , -3491. , ...,  2432. ,  2432.5,  2432.5],
+       [-3492. , -3491. , -3491. , ...,  2432. ,  2431.5,  2432. ],
+       [-3492. , -3491. , -3491. , ...,  2431.5,  2431. ,  2431. ],
+       ...,
+       [-3872. , -3872. , -3872. , ...,  1926.5,  1929.5,  1932.5],
+       [-3872. , -3872. , -3872. , ...,  1925.5,  1928. ,  1931. ],
+       [-3872. , -3872. , -3872. , ...,  1923.5,  1925.5,  1928. ]])
+Coordinates:
+  * lat      (lat) float64 12kB 12.0 12.01 12.02 12.03 ... 24.98 24.99 25.0
+  * lon      (lon) float64 33kB -151.0 -151.0 -151.0 ... -117.0 -117.0 -117.0
+Attributes:
+    Conventions:  CF-1.7
+    title:        
+    history:      gmt grdblend @mars_relief_30s_g/ -R-151/-117/12/25 -I30s -r...
+    description:  NASA Mars (MOLA) relief
+    long_name:    z
+    units:        meters</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-array-name'>'z'</div><ul class='xr-dim-list'><li><span class='xr-has-index'>lat</span>: 1561</li><li><span class='xr-has-index'>lon</span>: 4081</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-fabd3542-be1f-4c68-aa37-85c0b6decddd' class='xr-array-in' type='checkbox' checked><label for='section-fabd3542-be1f-4c68-aa37-85c0b6decddd' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>-3.492e+03 -3.491e+03 -3.491e+03 ... 1.924e+03 1.926e+03 1.928e+03</span></div><div class='xr-array-data'><pre>array([[-3492. , -3491. , -3491. , ...,  2432. ,  2432.5,  2432.5],
+       [-3492. , -3491. , -3491. , ...,  2432. ,  2431.5,  2432. ],
+       [-3492. , -3491. , -3491. , ...,  2431.5,  2431. ,  2431. ],
+       ...,
+       [-3872. , -3872. , -3872. , ...,  1926.5,  1929.5,  1932.5],
+       [-3872. , -3872. , -3872. , ...,  1925.5,  1928. ,  1931. ],
+       [-3872. , -3872. , -3872. , ...,  1923.5,  1925.5,  1928. ]])</pre></div></div></li><li class='xr-section-item'><input id='section-638c6163-700b-4b5a-bd2e-53cd59687308' class='xr-section-summary-in' type='checkbox'  checked><label for='section-638c6163-700b-4b5a-bd2e-53cd59687308' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>lat</span></div><div class='xr-var-dims'>(lat)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>12.0 12.01 12.02 ... 24.99 25.0</div><input id='attrs-44a0113f-9d36-463e-97e8-91ca09ce508b' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-44a0113f-9d36-463e-97e8-91ca09ce508b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-d4c44310-5acf-42ed-a425-82b96739f325' class='xr-var-data-in' type='checkbox'><label for='data-d4c44310-5acf-42ed-a425-82b96739f325' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>latitude</dd><dt><span>units :</span></dt><dd>degrees_north</dd><dt><span>standard_name :</span></dt><dd>latitude</dd><dt><span>axis :</span></dt><dd>Y</dd></dl></div><div class='xr-var-data'><pre>array([12.      , 12.008333, 12.016667, ..., 24.983333, 24.991667, 25.      ])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>lon</span></div><div class='xr-var-dims'>(lon)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-151.0 -151.0 ... -117.0 -117.0</div><input id='attrs-6a5b4075-3e19-4186-95f7-582432622833' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-6a5b4075-3e19-4186-95f7-582432622833' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-ccc6302a-d9f3-47e6-a072-fe68403286e0' class='xr-var-data-in' type='checkbox'><label for='data-ccc6302a-d9f3-47e6-a072-fe68403286e0' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>longitude</dd><dt><span>units :</span></dt><dd>degrees_east</dd><dt><span>standard_name :</span></dt><dd>longitude</dd><dt><span>axis :</span></dt><dd>X</dd></dl></div><div class='xr-var-data'><pre>array([-151.      , -150.991667, -150.983333, ..., -117.016667, -117.008333,
+       -117.      ])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-c7d72953-f64f-42fb-9515-67a3b35c46a6' class='xr-section-summary-in' type='checkbox'  ><label for='section-c7d72953-f64f-42fb-9515-67a3b35c46a6' class='xr-section-summary' >Indexes: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-index-name'><div>lat</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-16c6b654-a921-4d41-91ec-d0c77254bfb1' class='xr-index-data-in' type='checkbox'/><label for='index-16c6b654-a921-4d41-91ec-d0c77254bfb1' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([              12.0, 12.008333333333333, 12.016666666666667,
+                   12.025, 12.033333333333333, 12.041666666666666,
+                    12.05, 12.058333333333334, 12.066666666666666,
+       12.075000000000001,
+       ...
+                   24.925, 24.933333333333334, 24.941666666666666,
+                    24.95, 24.958333333333332, 24.966666666666665,
+                   24.975, 24.983333333333334, 24.991666666666667,
+                     25.0],
+      dtype=&#x27;float64&#x27;, name=&#x27;lat&#x27;, length=1561))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>lon</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-b229e492-4417-4345-9e7e-a869dd15fc7a' class='xr-index-data-in' type='checkbox'/><label for='index-b229e492-4417-4345-9e7e-a869dd15fc7a' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([             -151.0, -150.99166666666667, -150.98333333333332,
+                  -150.975, -150.96666666666667, -150.95833333333334,
+                   -150.95, -150.94166666666666, -150.93333333333334,
+                  -150.925,
+       ...
+                  -117.075, -117.06666666666666, -117.05833333333334,
+                   -117.05, -117.04166666666666, -117.03333333333333,
+                  -117.025, -117.01666666666667, -117.00833333333333,
+                    -117.0],
+      dtype=&#x27;float64&#x27;, name=&#x27;lon&#x27;, length=4081))</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-30878185-4cef-4ebe-ae7d-b4846fdf2882' class='xr-section-summary-in' type='checkbox'  checked><label for='section-30878185-4cef-4ebe-ae7d-b4846fdf2882' class='xr-section-summary' >Attributes: <span>(6)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>Conventions :</span></dt><dd>CF-1.7</dd><dt><span>title :</span></dt><dd></dd><dt><span>history :</span></dt><dd>gmt grdblend @mars_relief_30s_g/ -R-151/-117/12/25 -I30s -rg -G@GMTAPI@-S-O-G-G-G-Y-000002 -fg -Co+n</dd><dt><span>description :</span></dt><dd>NASA Mars (MOLA) relief</dd><dt><span>long_name :</span></dt><dd>z</dd><dt><span>units :</span></dt><dd>meters</dd></dl></div></li></ul></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pygmt</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">grdimage</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="n">da_olympus</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;WSne+tOlympus Mons&quot;</span><span class="p">,</span> <span class="s2">&quot;af&quot;</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;SCM/managua+h0&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">frame</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;a5000&quot;</span><span class="p">,</span> <span class="s2">&quot;x+lElevation&quot;</span><span class="p">,</span> <span class="s2">&quot;y+lm&quot;</span><span class="p">])</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/711da2ec93ab9e86003430148d6b87f64ff52902146413aa3531d639dfeb3e76.png"><img alt="_images/711da2ec93ab9e86003430148d6b87f64ff52902146413aa3531d639dfeb3e76.png" src="_images/711da2ec93ab9e86003430148d6b87f64ff52902146413aa3531d639dfeb3e76.png" style="width: 500px;" /></a>
+</div>
+</div>
+</section>
+</section>
+<section id="using-grdview-for-3-d-visualization">
+<h2>1️⃣ Using <code class="docutils literal notranslate"><span class="pre">grdview</span></code> for 3-D Visualization<a class="headerlink" href="#using-grdview-for-3-d-visualization" title="Link to this heading">#</a></h2>
+<p>The <a class="reference external" href="https://www.pygmt.org/v0.13.0/api/generated/pygmt.Figure.grdview.html"><code class="docutils literal notranslate"><span class="pre">grdview</span></code></a>
+method in PyGMT is a powerful tool for creating 3-D perspective views of gridded data.
+By adjusting azimuth and elevation parameters, you can change the viewpoint, helping you
+to highlight specific terrain features or data patterns. Let’s go through how these
+parameters affect the visualization.</p>
+<p><strong>Setting the Perspective: Azimuth and Elevation</strong></p>
+<ul class="simple">
+<li><p><strong>Azimuth</strong> (<code class="docutils literal notranslate"><span class="pre">azimuth</span></code>): Controls the horizontal rotation of the view, ranging from 0°
+to 360°. Lower values (close to 0°) represent a viewpoint from the north, while 90°
+gives a view from the east, 180° from the south, and 270° from the west. Experimenting
+with azimuth can help showcase specific aspects of the data from different angles.</p></li>
+<li><p><strong>Elevation</strong> (<code class="docutils literal notranslate"><span class="pre">elevation</span></code>): Controls the vertical angle of the view, with 90°
+representing a top-down perspective and lower values providing more of a side view.
+Typically, values between 20° and 60° create a balanced 3-D effect.</p></li>
+</ul>
+<p><strong>Example</strong>: Using <code class="docutils literal notranslate"><span class="pre">perspective=[150,</span> <span class="pre">45]</span></code> means <code class="docutils literal notranslate"><span class="pre">azimuth=150</span></code> and <code class="docutils literal notranslate"><span class="pre">elevation=45</span></code>, which
+gives you a southeast view, tilted at a moderate angle to capture both horizontal and
+vertical details.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pygmt</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">grdview</span><span class="p">(</span>
+    <span class="n">grid</span><span class="o">=</span><span class="n">da_olympus</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;SCM/managua+h0&quot;</span><span class="p">,</span>
+    <span class="n">region</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">151</span><span class="p">,</span> <span class="o">-</span><span class="mi">117</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">23000</span><span class="p">],</span>  <span class="c1"># xmin, xmax, ymin, ymax, zmin, zmax</span>
+    <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;M12c&quot;</span><span class="p">,</span>
+    <span class="n">perspective</span><span class="o">=</span><span class="p">[</span><span class="mi">150</span><span class="p">,</span> <span class="mi">45</span><span class="p">],</span>  <span class="c1"># azimuth bearing, and elevation angle</span>
+    <span class="n">zsize</span><span class="o">=</span><span class="s2">&quot;4c&quot;</span><span class="p">,</span>  <span class="c1"># vertical exaggeration</span>
+    <span class="n">surftype</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">,</span>  <span class="c1"># surface plot</span>
+    <span class="n">shading</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">frame</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;xaf&quot;</span><span class="p">,</span> <span class="s2">&quot;yaf&quot;</span><span class="p">,</span> <span class="s2">&quot;z5000+lmeters&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">frame</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;a5000&quot;</span><span class="p">,</span> <span class="s2">&quot;x+lElevation&quot;</span><span class="p">,</span> <span class="s2">&quot;y+lm&quot;</span><span class="p">],</span> <span class="n">perspective</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">shading</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/14bcf9767aede971398cbc56fc2bd4e6aba04b49f61497063707a3ada60abe02.png"><img alt="_images/14bcf9767aede971398cbc56fc2bd4e6aba04b49f61497063707a3ada60abe02.png" src="_images/14bcf9767aede971398cbc56fc2bd4e6aba04b49f61497063707a3ada60abe02.png" style="width: 500px;" /></a>
+</div>
+</div>
+<p>Note that there are other things we have configured such as:</p>
+<ul class="simple">
+<li><p><strong>zsize</strong> - vertical exaggeration as z-axis size, we used <code class="docutils literal notranslate"><span class="pre">4c</span></code> here for 4 centimeters</p></li>
+<li><p><strong>surftype</strong> - using <code class="docutils literal notranslate"><span class="pre">s</span></code> will just create a regular surface</p></li>
+<li><p><strong>shading</strong> - set to <code class="docutils literal notranslate"><span class="pre">True</span></code> to get the default hillshading effect</p></li>
+<li><p><strong>frame</strong> - A proper 3-D map frame that consists of:</p>
+<ul>
+<li><p>automatic tick marks on x and y axis (e.g., <code class="docutils literal notranslate"><span class="pre">xaf</span></code> and <code class="docutils literal notranslate"><span class="pre">yaf</span></code>)</p></li>
+<li><p>z-axis tick marks every 5000m, plus a label (<code class="docutils literal notranslate"><span class="pre">z5000+lLabel</span></code>)</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>When choosing azimuth and elevation, always consider how the scene is illuminated.
+Azimuth angles that align with typical light directions (e.g., from the northwest)
+often provide the most natural and visually appealing shadows. Elevations between 20°
+and 45° typically create a good balance, highlighting terrain features without
+flattening or obscuring them. You can experiment with different combinations to best
+reveal the data’s structure.</p>
+</div>
+</section>
+<section id="antarctic-digital-elevation-model">
+<h2>2️⃣ Antarctic Digital Elevation Model<a class="headerlink" href="#antarctic-digital-elevation-model" title="Link to this heading">#</a></h2>
+<p>For the next exercise, we’ll pay a visit to the Antarctic continent, specifically,
+looking at Ross Island where the McMurdo Station (US) and Scott Base (NZ) is located.
+We’ll learn how to drape some RGB imagery from Sentinel-2 onto some DEM tiles from the
+Reference Elevation Model of Antarctica (REMA).</p>
+<p>🔖 References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.pgc.umn.edu/data/rema/">https://www.pgc.umn.edu/data/rema/</a></p></li>
+<li><p><span id="id2">Howat <em>et al.</em> [<a class="reference internal" href="#id4" title="Ian M. Howat, Claire Porter, Benjamin E. Smith, Myoung-Jong Noh, and Paul Morin. The Reference Elevation Model of Antarctica. The Cryosphere, 13(2):665–674, February 2019. doi:10.5194/tc-13-665-2019.">2019</a>]</span></p></li>
+</ul>
+<section id="getting-a-dem-mosaic">
+<h3>2.1 Getting a DEM mosaic<a class="headerlink" href="#getting-a-dem-mosaic" title="Link to this heading">#</a></h3>
+<p>The REMA tiles are distributed as several GeoTIFF files. Our area of interest over Ross
+Island spans two tiles, so we’ll need to retrieve them both an mosaic them. There are
+several sources for REMA, but we’ll use one sourced from
+<a class="reference external" href="https://registry.opendata.aws/pgc-rema/">https://registry.opendata.aws/pgc-rema/</a>. The two specific tiles we’ll get can be
+previewed at:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://polargeospatialcenter.github.io/stac-browser/#/external/pgc-opendata-dems.s3.us-west-2.amazonaws.com/rema/mosaics/v2.0/32m/17_33/17_33_32m_v2.0.json">https://polargeospatialcenter.github.io/stac-browser/#/external/pgc-opendata-dems.s3.us-west-2.amazonaws.com/rema/mosaics/v2.0/32m/17_33/17_33_32m_v2.0.json</a></p></li>
+<li><p><a class="reference external" href="https://polargeospatialcenter.github.io/stac-browser/#/external/pgc-opendata-dems.s3.us-west-2.amazonaws.com/rema/mosaics/v2.0/32m/17_34/17_34_32m_v2.0.json">https://polargeospatialcenter.github.io/stac-browser/#/external/pgc-opendata-dems.s3.us-west-2.amazonaws.com/rema/mosaics/v2.0/32m/17_34/17_34_32m_v2.0.json</a></p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To find the tile number, go to <a class="reference external" href="https://rema.apps.pgc.umn.edu/">https://rema.apps.pgc.umn.edu/</a> and zoom/pan to the area
+on the map you’re interested in getting a DEM for. Click on the ‘Identify’ button on the
+bottom left, and a pop-up will tell you the tile ID number.</p>
+</div>
+<p>To open the GeoTIFF files, we can use
+<a class="reference external" href="https://corteva.github.io/rioxarray/stable/rioxarray.html#rioxarray.open_rasterio"><code class="docutils literal notranslate"><span class="pre">rioxarray.open_rasterio</span></code></a>
+which load the data into an <code class="docutils literal notranslate"><span class="pre">xarray.DataArray</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tile_17_33</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;https://pgc-opendata-dems.s3.us-west-2.amazonaws.com/rema/mosaics/v2.0/32m/17_33/17_33_32m_v2.0_dem.tif&quot;</span>
+<span class="p">)</span>
+<span class="n">tile_17_34</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;https://pgc-opendata-dems.s3.us-west-2.amazonaws.com/rema/mosaics/v2.0/32m/17_34/17_34_32m_v2.0_dem.tif&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, we’ll use
+<a class="reference external" href="https://corteva.github.io/rioxarray/stable/rioxarray.html#rioxarray.merge.merge_arrays"><code class="docutils literal notranslate"><span class="pre">rioxarray.merge.merge_arrays</span></code></a>
+to mosaic the two tiles together, and clip it to the spatial extent of Ross Island.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dem_mosaic</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">merge</span><span class="o">.</span><span class="n">merge_arrays</span><span class="p">(</span>
+    <span class="n">dataarrays</span><span class="o">=</span><span class="p">[</span><span class="n">tile_17_33</span><span class="p">,</span> <span class="n">tile_17_34</span><span class="p">],</span>
+    <span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mi">250_000</span><span class="p">,</span> <span class="o">-</span><span class="mi">1_370_000</span><span class="p">,</span> <span class="mi">330_000</span><span class="p">,</span> <span class="o">-</span><span class="mi">1_300_000</span><span class="p">),</span>  <span class="c1"># xmin, ymin, xmax, ymax</span>
+<span class="p">)</span><span class="o">.</span><span class="n">isel</span><span class="p">(</span><span class="n">band</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Preview the DEM using
+<a class="reference external" href="https://www.pygmt.org/v0.13.0/api/generated/pygmt.Figure.grdimage"><code class="docutils literal notranslate"><span class="pre">pygmt.Figure.grdimage</span></code></a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pygmt</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">grdimage</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="n">dem_mosaic</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;oleron&quot;</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">shading</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/067331dea4447856b618f24ecea3b27d4e44b3226e8fe691f08154c8881c494e.png"><img alt="_images/067331dea4447856b618f24ecea3b27d4e44b3226e8fe691f08154c8881c494e.png" src="_images/067331dea4447856b618f24ecea3b27d4e44b3226e8fe691f08154c8881c494e.png" style="width: 500px;" /></a>
+</div>
+</div>
+</section>
+<section id="getting-rgb-imagery">
+<h3>2.2 Getting RGB imagery<a class="headerlink" href="#getting-rgb-imagery" title="Link to this heading">#</a></h3>
+<p>Next, let’s get some Sentinel-2 optical satellite imagery, which we’ll use to drape
+on top of the DEM later. We’ll find some relatively cloud-free imagery that was taken on
+31 Oct 2024, specifically these ones that can be previewed at:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://radiantearth.github.io/stac-browser/#/external/earth-search.aws.element84.com/v1/collections/sentinel-2-l2a/items/S2B_58CEU_20241109_0_L2A?.asset=asset-visual">https://radiantearth.github.io/stac-browser/#/external/earth-search.aws.element84.com/v1/collections/sentinel-2-l2a/items/S2B_58CEU_20241109_0_L2A?.asset=asset-visual</a></p></li>
+<li><p><a class="reference external" href="https://radiantearth.github.io/stac-browser/#/external/earth-search.aws.element84.com/v1/collections/sentinel-2-l2a/items/S2B_58CEV_20241109_0_L2A?.asset=asset-visual">https://radiantearth.github.io/stac-browser/#/external/earth-search.aws.element84.com/v1/collections/sentinel-2-l2a/items/S2B_58CEV_20241109_0_L2A?.asset=asset-visual</a></p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>There are several online viewers based on Spatiotemporal Asset Catalog (STAC) APIs that
+allow you to search for satellite imagery. Some examples used here were:</p>
+<ul class="simple">
+<li><p>EO Browser: <a class="reference external" href="https://apps.sentinel-hub.com/eo-browser/?zoom=10&amp;amp;lat=-77.05481&amp;amp;lng=167.27783&amp;amp;themeId=DEFAULT-THEME&amp;amp;visualizationUrl=U2FsdGVkX1%2Btyu1tAfovEieshimr1kMCjLpUXj8Xj1Se6ZoskUOY9xy0WSJyoWvbaHR3C7efJLFsAYvknrfc4Ofb3zqo9bjWhhIUGdtgIp6bitruPIvShiqwMbLG05FK&amp;amp;datasetId=S2L2A&amp;amp;fromTime=2024-11-09T00:00:00.000Z&amp;amp;toTime=2024-11-09T23:59:59.999Z&amp;amp;layerId=2_TONEMAPPED_NATURAL_COLOR&amp;amp;demSource3D=%22MAPZEN%22">https://apps.sentinel-hub.com/eo-browser/?zoom=10&amp;lat=-77.05481&amp;lng=167.27783&amp;themeId=DEFAULT-THEME&amp;visualizationUrl=U2FsdGVkX1%2Btyu1tAfovEieshimr1kMCjLpUXj8Xj1Se6ZoskUOY9xy0WSJyoWvbaHR3C7efJLFsAYvknrfc4Ofb3zqo9bjWhhIUGdtgIp6bitruPIvShiqwMbLG05FK&amp;datasetId=S2L2A&amp;fromTime=2024-11-09T00:00:00.000Z&amp;toTime=2024-11-09T23:59:59.999Z&amp;layerId=2_TONEMAPPED_NATURAL_COLOR&amp;demSource3D=”MAPZEN”</a></p></li>
+<li><p>Planetary Computer: <a class="reference external" href="https://planetarycomputer.microsoft.com/explore?c=167.8417%2C-77.5520&amp;amp;z=7.66&amp;amp;v=2&amp;amp;d=sentinel-2-l2a&amp;amp;m=cql%3A0bbe8c2e6820a52f6d134152bbbc4a3c&amp;amp;r=Natural+color&amp;amp;s=false%3A%3A100%3A%3Atrue&amp;amp;sr=desc&amp;amp;ae=0">https://planetarycomputer.microsoft.com/explore?c=167.8417%2C-77.5520&amp;z=7.66&amp;v=2&amp;d=sentinel-2-l2a&amp;m=cql%3A0bbe8c2e6820a52f6d134152bbbc4a3c&amp;r=Natural+color&amp;s=false%3A%3A100%3A%3Atrue&amp;sr=desc&amp;ae=0</a></p></li>
+</ul>
+</div>
+<p>We’ll use <code class="docutils literal notranslate"><span class="pre">rioxarray</span></code> again to open the GeoTIFF files (using <code class="docutils literal notranslate"><span class="pre">overview_level=1</span></code> means
+we can get a lower resolution version), and to mosaic the two image tiles together.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tile_58CEU</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/58/C/EU/2024/11/S2B_58CEU_20241109_0_L2A/TCI.tif&quot;</span><span class="p">,</span>
+    <span class="n">overview_level</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">tile_58CEV</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/58/C/EV/2024/11/S2B_58CEV_20241109_0_L2A/TCI.tif&quot;</span><span class="p">,</span>
+    <span class="n">overview_level</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">rgb_mosaic</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">merge</span><span class="o">.</span><span class="n">merge_arrays</span><span class="p">(</span><span class="n">dataarrays</span><span class="o">=</span><span class="p">[</span><span class="n">tile_58CEU</span><span class="p">,</span> <span class="n">tile_58CEV</span><span class="p">])</span>
+<span class="n">rgb_image</span> <span class="o">=</span> <span class="n">rgb_mosaic</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">reproject_match</span><span class="p">(</span><span class="n">match_data_array</span><span class="o">=</span><span class="n">dem_mosaic</span><span class="p">)</span>
+<span class="n">rgb_image</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+html[data-theme=dark],
+body[data-theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block !important;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 0 20px 0 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: inline-block;
+  opacity: 0;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:focus + label {
+  border: 2px solid var(--xr-font-color0);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-index-preview {
+  grid-column: 2 / 5;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data,
+.xr-index-data-in:checked ~ .xr-index-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-index-name div,
+.xr-index-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2,
+.xr-no-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.DataArray (band: 3, y: 2188, x: 2500)&gt; Size: 16MB
+array([[[255, 255, 255, ..., 255, 255, 255],
+        [255, 255, 255, ..., 255, 255, 255],
+        [255, 255, 255, ..., 255, 255, 255],
+        ...,
+        [  0,   0,   0, ..., 255, 255, 255],
+        [  0,   0,   0, ..., 255, 255, 255],
+        [  0,   0,   0, ..., 255, 252, 254]],
+
+       [[255, 255, 255, ..., 255, 255, 255],
+        [255, 255, 255, ..., 255, 255, 255],
+        [255, 255, 255, ..., 255, 255, 255],
+        ...,
+        [  0,   0,   0, ..., 255, 255, 255],
+        [  0,   0,   0, ..., 255, 255, 255],
+        [  0,   0,   0, ..., 255, 255, 255]],
+
+       [[255, 255, 255, ..., 255, 255, 255],
+        [255, 255, 255, ..., 255, 255, 255],
+        [255, 255, 255, ..., 255, 255, 255],
+        ...,
+        [  0,   0,   0, ..., 255, 255, 255],
+        [  0,   0,   0, ..., 255, 255, 255],
+        [  0,   0,   0, ..., 255, 255, 255]]], dtype=uint8)
+Coordinates:
+  * band         (band) int64 24B 1 2 3
+    spatial_ref  int64 8B 0
+  * x            (x) float64 20kB 2.5e+05 2.5e+05 2.501e+05 ... 3.3e+05 3.3e+05
+  * y            (y) float64 18kB -1.3e+06 -1.3e+06 ... -1.37e+06 -1.37e+06
+Attributes:
+    OVR_RESAMPLING_ALG:  AVERAGE
+    AREA_OR_POINT:       Area
+    scale_factor:        1.0
+    add_offset:          0.0
+    _FillValue:          0</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-array-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>band</span>: 3</li><li><span class='xr-has-index'>y</span>: 2188</li><li><span class='xr-has-index'>x</span>: 2500</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-9ffff777-d3ff-415a-a046-907901ae7539' class='xr-array-in' type='checkbox' checked><label for='section-9ffff777-d3ff-415a-a046-907901ae7539' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>255 255 255 255 255 255 255 255 ... 255 255 255 255 255 255 255 255</span></div><div class='xr-array-data'><pre>array([[[255, 255, 255, ..., 255, 255, 255],
+        [255, 255, 255, ..., 255, 255, 255],
+        [255, 255, 255, ..., 255, 255, 255],
+        ...,
+        [  0,   0,   0, ..., 255, 255, 255],
+        [  0,   0,   0, ..., 255, 255, 255],
+        [  0,   0,   0, ..., 255, 252, 254]],
+
+       [[255, 255, 255, ..., 255, 255, 255],
+        [255, 255, 255, ..., 255, 255, 255],
+        [255, 255, 255, ..., 255, 255, 255],
+        ...,
+        [  0,   0,   0, ..., 255, 255, 255],
+        [  0,   0,   0, ..., 255, 255, 255],
+        [  0,   0,   0, ..., 255, 255, 255]],
+
+       [[255, 255, 255, ..., 255, 255, 255],
+        [255, 255, 255, ..., 255, 255, 255],
+        [255, 255, 255, ..., 255, 255, 255],
+        ...,
+        [  0,   0,   0, ..., 255, 255, 255],
+        [  0,   0,   0, ..., 255, 255, 255],
+        [  0,   0,   0, ..., 255, 255, 255]]], dtype=uint8)</pre></div></div></li><li class='xr-section-item'><input id='section-23d5d05b-58a8-4ff5-9d69-dee72be45e92' class='xr-section-summary-in' type='checkbox'  checked><label for='section-23d5d05b-58a8-4ff5-9d69-dee72be45e92' class='xr-section-summary' >Coordinates: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>band</span></div><div class='xr-var-dims'>(band)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>1 2 3</div><input id='attrs-9364cba4-45ac-4068-b764-008664d449b7' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-9364cba4-45ac-4068-b764-008664d449b7' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-dd0aaff0-ce52-42df-aa08-9b484aa4cab0' class='xr-var-data-in' type='checkbox'><label for='data-dd0aaff0-ce52-42df-aa08-9b484aa4cab0' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([1, 2, 3])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>spatial_ref</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-98fd4b01-cef7-49eb-8bc8-aa9a818a5b51' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-98fd4b01-cef7-49eb-8bc8-aa9a818a5b51' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-f816af8a-4712-47a6-8459-90d9cd3fa97f' class='xr-var-data-in' type='checkbox'><label for='data-f816af8a-4712-47a6-8459-90d9cd3fa97f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>crs_wkt :</span></dt><dd>PROJCS[&quot;WGS 84 / Antarctic Polar Stereographic&quot;,GEOGCS[&quot;WGS 84&quot;,DATUM[&quot;WGS_1984&quot;,SPHEROID[&quot;WGS 84&quot;,6378137,298.257223563,AUTHORITY[&quot;EPSG&quot;,&quot;7030&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6326&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;4326&quot;]],PROJECTION[&quot;Polar_Stereographic&quot;],PARAMETER[&quot;latitude_of_origin&quot;,-71],PARAMETER[&quot;central_meridian&quot;,0],PARAMETER[&quot;false_easting&quot;,0],PARAMETER[&quot;false_northing&quot;,0],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,NORTH],AXIS[&quot;Northing&quot;,NORTH],AUTHORITY[&quot;EPSG&quot;,&quot;3031&quot;]]</dd><dt><span>semi_major_axis :</span></dt><dd>6378137.0</dd><dt><span>semi_minor_axis :</span></dt><dd>6356752.314245179</dd><dt><span>inverse_flattening :</span></dt><dd>298.257223563</dd><dt><span>reference_ellipsoid_name :</span></dt><dd>WGS 84</dd><dt><span>longitude_of_prime_meridian :</span></dt><dd>0.0</dd><dt><span>prime_meridian_name :</span></dt><dd>Greenwich</dd><dt><span>geographic_crs_name :</span></dt><dd>WGS 84</dd><dt><span>horizontal_datum_name :</span></dt><dd>World Geodetic System 1984</dd><dt><span>projected_crs_name :</span></dt><dd>WGS 84 / Antarctic Polar Stereographic</dd><dt><span>grid_mapping_name :</span></dt><dd>polar_stereographic</dd><dt><span>standard_parallel :</span></dt><dd>-71.0</dd><dt><span>straight_vertical_longitude_from_pole :</span></dt><dd>0.0</dd><dt><span>false_easting :</span></dt><dd>0.0</dd><dt><span>false_northing :</span></dt><dd>0.0</dd><dt><span>spatial_ref :</span></dt><dd>PROJCS[&quot;WGS 84 / Antarctic Polar Stereographic&quot;,GEOGCS[&quot;WGS 84&quot;,DATUM[&quot;WGS_1984&quot;,SPHEROID[&quot;WGS 84&quot;,6378137,298.257223563,AUTHORITY[&quot;EPSG&quot;,&quot;7030&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6326&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;4326&quot;]],PROJECTION[&quot;Polar_Stereographic&quot;],PARAMETER[&quot;latitude_of_origin&quot;,-71],PARAMETER[&quot;central_meridian&quot;,0],PARAMETER[&quot;false_easting&quot;,0],PARAMETER[&quot;false_northing&quot;,0],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,NORTH],AXIS[&quot;Northing&quot;,NORTH],AUTHORITY[&quot;EPSG&quot;,&quot;3031&quot;]]</dd><dt><span>GeoTransform :</span></dt><dd>250000.0 32.0 0.0 -1300000.0 0.0 -32.0</dd></dl></div><div class='xr-var-data'><pre>array(0)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>x</span></div><div class='xr-var-dims'>(x)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>2.5e+05 2.5e+05 ... 3.3e+05 3.3e+05</div><input id='attrs-348e54e8-ede8-42ad-a20c-ffc90a62e00b' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-348e54e8-ede8-42ad-a20c-ffc90a62e00b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-4e383da2-dc4b-4294-91df-c82e42a52fea' class='xr-var-data-in' type='checkbox'><label for='data-4e383da2-dc4b-4294-91df-c82e42a52fea' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>axis :</span></dt><dd>X</dd><dt><span>long_name :</span></dt><dd>x coordinate of projection</dd><dt><span>standard_name :</span></dt><dd>projection_x_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd></dl></div><div class='xr-var-data'><pre>array([250016., 250048., 250080., ..., 329920., 329952., 329984.])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>y</span></div><div class='xr-var-dims'>(y)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-1.3e+06 -1.3e+06 ... -1.37e+06</div><input id='attrs-74549d52-a183-48ee-8f96-6df22bb19db0' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-74549d52-a183-48ee-8f96-6df22bb19db0' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-b21e70e2-b995-4bd1-a8e8-fcb8419754b5' class='xr-var-data-in' type='checkbox'><label for='data-b21e70e2-b995-4bd1-a8e8-fcb8419754b5' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>axis :</span></dt><dd>Y</dd><dt><span>long_name :</span></dt><dd>y coordinate of projection</dd><dt><span>standard_name :</span></dt><dd>projection_y_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd></dl></div><div class='xr-var-data'><pre>array([-1300016., -1300048., -1300080., ..., -1369936., -1369968., -1370000.])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-829047e1-c202-4a0a-b60c-2fd132dd434a' class='xr-section-summary-in' type='checkbox'  ><label for='section-829047e1-c202-4a0a-b60c-2fd132dd434a' class='xr-section-summary' >Indexes: <span>(3)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-index-name'><div>band</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-e00ec558-c5b7-4189-bd64-378998b86253' class='xr-index-data-in' type='checkbox'/><label for='index-e00ec558-c5b7-4189-bd64-378998b86253' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([1, 2, 3], dtype=&#x27;int64&#x27;, name=&#x27;band&#x27;))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>x</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-76e93c2f-9808-48a0-ab10-940cb0b18b07' class='xr-index-data-in' type='checkbox'/><label for='index-76e93c2f-9808-48a0-ab10-940cb0b18b07' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([250016.0, 250048.0, 250080.0, 250112.0, 250144.0, 250176.0, 250208.0,
+       250240.0, 250272.0, 250304.0,
+       ...
+       329696.0, 329728.0, 329760.0, 329792.0, 329824.0, 329856.0, 329888.0,
+       329920.0, 329952.0, 329984.0],
+      dtype=&#x27;float64&#x27;, name=&#x27;x&#x27;, length=2500))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>y</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-86785de1-f53d-4091-93ba-d396241ada23' class='xr-index-data-in' type='checkbox'/><label for='index-86785de1-f53d-4091-93ba-d396241ada23' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([-1300016.0, -1300048.0, -1300080.0, -1300112.0, -1300144.0, -1300176.0,
+       -1300208.0, -1300240.0, -1300272.0, -1300304.0,
+       ...
+       -1369712.0, -1369744.0, -1369776.0, -1369808.0, -1369840.0, -1369872.0,
+       -1369904.0, -1369936.0, -1369968.0, -1370000.0],
+      dtype=&#x27;float64&#x27;, name=&#x27;y&#x27;, length=2188))</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-67a326bc-6543-4837-bd94-667f6aa35d8c' class='xr-section-summary-in' type='checkbox'  checked><label for='section-67a326bc-6543-4837-bd94-667f6aa35d8c' class='xr-section-summary' >Attributes: <span>(5)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>OVR_RESAMPLING_ALG :</span></dt><dd>AVERAGE</dd><dt><span>AREA_OR_POINT :</span></dt><dd>Area</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>_FillValue :</span></dt><dd>0</dd></dl></div></li></ul></div></div></div></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>When working with DEM mosaics and optical imagery, carefully consider the size and
+resolution of the data. High-resolution DEMs combined with complex topographies can
+demand substantial computational resources for processing and visualization. A practical
+tip is to start with lower resolutions to experiment with and refine the scene geometry
+(e.g., azimuth, elevation, and perspective). Once you are satisfied with the
+visualization setup, switch to higher-resolution data for the final rendering. This
+approach helps optimize computational efficiency while maintaining the quality of your
+analysis.</p>
+</div>
+</section>
+</section>
+<section id="draping-rgb-image-on-3-d-topography">
+<h2>3️⃣ Draping RGB image on 3-D topography<a class="headerlink" href="#draping-rgb-image-on-3-d-topography" title="Link to this heading">#</a></h2>
+<p>We have our RGB imagery from Sentinel-2, and a DEM from REMA, and now we can learn how
+to render the colour image on top of the 3-D topography! Once again, we will be using
+<a class="reference external" href="https://www.pygmt.org/v0.13.0/api/generated/pygmt.Figure.grdview.html"><code class="docutils literal notranslate"><span class="pre">grdview</span></code></a>, but
+pass in some extra arguments:</p>
+<ul class="simple">
+<li><p><strong>drapegrid</strong>: This is the image that will be overlaid on top of the relief <strong>grid</strong>.</p></li>
+<li><p><strong>surftype</strong>: We are plotting an RGB image with 3-bands, so we will use <code class="docutils literal notranslate"><span class="pre">i</span></code> for an
+image plot. It is also possible to append a number (e.g. <code class="docutils literal notranslate"><span class="pre">600</span></code>) as the dots-per-unit
+resolution for the rasterization</p></li>
+<li><p><strong>zscale</strong>: vertical exaggeration factor, usually given as a fractional number.</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>When setting the <code class="docutils literal notranslate"><span class="pre">zscale</span></code> for vertical exaggeration, choose a value that balances
+clarity and realism. For subtle topographies, higher exaggeration (e.g., smaller
+<code class="docutils literal notranslate"><span class="pre">zscale</span></code> values) can emphasize elevation differences, making features more visible.
+However, for steep terrains, lower exaggeration helps maintain a natural appearance. You
+may use <code class="docutils literal notranslate"><span class="pre">shading=True</span></code> to add hillshading, which enhances the 3-D effect by simulating
+light and shadows, making terrain features easier to interpret. Experiment with both
+parameters to find the best combination for your dataset and visualization goals.</p>
+</div>
+<p>This is how the code will look like. We’ll also use
+<a class="reference external" href="https://www.pygmt.org/v0.13.0/api/generated/pygmt.config.html"><code class="docutils literal notranslate"><span class="pre">pygmt.config</span></code></a> to set
+<a class="reference external" href="https://docs.generic-mapping-tools.org/6.5/gmt.conf.html#term-PS_PAGE_COLOR"><code class="docutils literal notranslate"><span class="pre">PS_PAGE_COLOR</span></code></a>
+(the background colour) to an off-white colour instead of the default black to better
+match the polar landscape.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pygmt</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">pygmt</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">PS_PAGE_COLOR</span><span class="o">=</span><span class="s2">&quot;#a9aba5&quot;</span><span class="p">):</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">grdview</span><span class="p">(</span>
+        <span class="n">grid</span><span class="o">=</span><span class="n">dem_mosaic</span><span class="p">,</span>  <span class="c1"># DEM layer</span>
+        <span class="n">drapegrid</span><span class="o">=</span><span class="n">rgb_image</span><span class="p">,</span>  <span class="c1"># Sentinel-2 image layer</span>
+        <span class="n">surftype</span><span class="o">=</span><span class="s2">&quot;i600&quot;</span><span class="p">,</span>  <span class="c1"># image draping with 600dpi resolution</span>
+        <span class="n">perspective</span><span class="o">=</span><span class="p">[</span><span class="mi">170</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span>  <span class="c1"># view azimuth and angle</span>
+        <span class="n">zscale</span><span class="o">=</span><span class="s2">&quot;0.0005&quot;</span><span class="p">,</span>  <span class="c1"># vertical exaggeration</span>
+        <span class="n">shading</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># hillshading</span>
+        <span class="c1"># frame=&quot;af&quot;,</span>
+    <span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>grdview [WARNING]: (w - x_min) must equal (NX + eps) * x_inc), where NX is an integer and |eps| &lt;= 0.0001.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>grdview [WARNING]: w reset from 250016 to 250000
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>grdview [WARNING]: (e - x_min) must equal (NX + eps) * x_inc), where NX is an integer and |eps| &lt;= 0.0001.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>grdview [WARNING]: e reset from 329984 to 330000
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>grdview [WARNING]: (s - y_min) must equal (NY + eps) * y_inc), where NY is an integer and |eps| &lt;= 0.0001.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>grdview [WARNING]: s reset from -1370000 to -1370016
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>grdview [WARNING]: (n - y_min) must equal (NY + eps) * y_inc), where NY is an integer and |eps| &lt;= 0.0001.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>grdview [WARNING]: n reset from -1300016 to -1300000
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/0a6fc097b1fcaa99eff8632dab714787757564ed60e07f20825101c6a8e045ae.png"><img alt="_images/0a6fc097b1fcaa99eff8632dab714787757564ed60e07f20825101c6a8e045ae.png" src="_images/0a6fc097b1fcaa99eff8632dab714787757564ed60e07f20825101c6a8e045ae.png" style="width: 500px;" /></a>
+</div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>Examples of other 3D perspective plots made with PyGMT:</p>
+<ul class="simple">
+<li><p><a class="github reference external" href="https://github.com/andrebelem/3D-Antarctic-maps">andrebelem/3D-Antarctic-maps</a></p></li>
+<li><p><a class="reference external" href="https://github.com/andrebelem/PlanetaryMaps/blob/main/2_%20Tutorial%20Mars%20Maps%20V2.ipynb">https://github.com/andrebelem/PlanetaryMaps/blob/main/2_ Tutorial Mars Maps V2.ipynb</a></p></li>
+<li><p><a class="reference external" href="https://www.generic-mapping-tools.org/egu22pygmt/lidar_to_surface.html">https://www.generic-mapping-tools.org/egu22pygmt/lidar_to_surface.html</a></p></li>
+<li><p><a class="reference external" href="https://www.pygmt.org/v0.13.0/tutorials/advanced/3d_perspective_image.html">https://www.pygmt.org/v0.13.0/tutorials/advanced/3d_perspective_image.html</a></p></li>
+</ul>
+</div>
+<div class="docutils container" id="id3">
+<p class="rubric">References</p>
+<div role="list" class="citation-list">
+<div class="citation" id="id4" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">HPS+19</a><span class="fn-bracket">]</span></span>
+<p>Ian M. Howat, Claire Porter, Benjamin E. Smith, Myoung-Jong Noh, and Paul Morin. The Reference Elevation Model of Antarctica. <em>The Cryosphere</em>, 13(2):665–674, February 2019. <a class="reference external" href="https://doi.org/10.5194/tc-13-665-2019">doi:10.5194/tc-13-665-2019</a>.</p>
+</div>
+<div class="citation" id="id5" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">NAA+03</a><span class="fn-bracket">]</span></span>
+<p>G. A. Neumann, J. B. Abshire, O. Aharonson, J. B. Garvin, X. Sun, and M. T. Zuber. Mars Orbiter Laser Altimeter pulse width measurements and footprint-scale roughness. <em>Geophysical Research Letters</em>, 30(11):2003GL017048, June 2003. <a class="reference external" href="https://doi.org/10.1029/2003GL017048">doi:10.1029/2003GL017048</a>.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="tut04_geophysics.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><strong>Tutorial 4</strong> - Geophysics (Seismology) 🌎🌏🌍</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="tut06_animation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><strong>Tutorial 6</strong> - Animations with GMT</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mars-relief-data">0️⃣ Mars relief data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d-map-view">0.1 2-D map view</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zoomed-in-view">0.2 Zoomed in view</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-grdview-for-3-d-visualization">1️⃣ Using <code class="docutils literal notranslate"><span class="pre">grdview</span></code> for 3-D Visualization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#antarctic-digital-elevation-model">2️⃣ Antarctic Digital Elevation Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-a-dem-mosaic">2.1 Getting a DEM mosaic</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-rgb-imagery">2.2 Getting RGB imagery</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#draping-rgb-image-on-3-d-topography">3️⃣ Draping RGB image on 3-D topography</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The GMT and PyGMT Teams
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />
+This content is licensed under a
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
